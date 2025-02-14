@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+import "types.proto";
+
+package flame;
+
+message ApplicationContext {
+    string name = 1;
+    Shim shim = 2;
+    optional string url = 3;
+    optional string command = 4;
+}
+
+message SessionContext {
+    string session_id = 1;
+    ApplicationContext application = 2;
+    optional bytes common_data = 3;
+}
+
+message TaskContext {
+    string task_id = 1;
+    string session_id = 2;
+    optional bytes input = 4;
+}
+
+message TaskOutput {
+    optional bytes data = 1;
+}
+
+service GrpcShim{
+    rpc OnSessionEnter(SessionContext) returns (Result) {}
+    rpc OnTaskInvoke(TaskContext) returns (TaskOutput) {}
+    rpc OnSessionLeave(EmptyRequest) returns (Result) {}
+}
+
+service GrpcServiceManager {
+    rpc RegisterService(RegisterServiceRequest) returns (RegisterServiceResponse) {}
+}
+
+message RegisterServiceRequest {
+    string address = 1;
+    string service_id = 2;
+}
+
+message RegisterServiceResponse {
+    
+}

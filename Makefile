@@ -22,3 +22,6 @@ update_protos:
 	cp rpc/protos/frontend.proto sdk/rust/protos
 	cp rpc/protos/types.proto sdk/rust/protos
 	cp rpc/protos/shim.proto sdk/rust/protos
+	cp rpc/protos/frontend.proto sdk/python/protos
+	cp rpc/protos/types.proto sdk/python/protos
+	cp rpc/protos/shim.proto sdk/python/protos

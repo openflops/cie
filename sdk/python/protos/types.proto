@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package flame;
+
+message Metadata {
+  string id = 1;
+  string name = 2;
+  optional string owner = 3;
+}
+
+enum SessionState {
+  Open = 0;
+  Closed = 1;
+}
+
+message SessionStatus {
+  SessionState state = 1;
+
+  int64 creation_time = 2;
+  optional int64 completion_time = 3;
+
+  int32 pending = 4;
+  int32 running = 5;
+  int32 succeed = 6;
+  int32 failed = 7;
+}
+
+message SessionSpec {
+  string application = 2;
+  int32 slots = 3;
+  optional bytes common_data = 4;
+}
+
+message Session {
+  Metadata metadata = 1;
+  SessionSpec spec = 2;
+  SessionStatus status = 3;
+}
+
+enum TaskState {
+  Pending = 0;
+  Running = 1;
+  Succeed = 2;
+  Failed = 3;
+}
+
+message TaskStatus {
+  TaskState state = 1;
+
+  int64 creation_time = 2;
+  optional int64 completion_time = 3;
+}
+
+message TaskSpec {
+  string session_id = 2;
+
+  optional bytes input = 3;
+  optional bytes output = 4;
+}
+
+message Task {
+  Metadata metadata = 1;
+  TaskSpec spec = 2;
+  TaskStatus status = 3;
+}
+
+enum Shim {
+  Log = 0;
+  Stdio = 1;
+  Wasm = 2;
+  Shell = 3;
+  Grpc = 4;
+}
+
+enum ApplicationState {
+  Enabled = 0;
+  Disabled = 1;
+}
+
+message ApplicationStatus {
+  ApplicationState state = 1;
+
+  int64 creation_time = 2;
+}
+
+message ApplicationSpec {
+  Shim shim = 1;
+  optional string url = 2;
+  optional string command = 3;
+  repeated string arguments = 4;
+  repeated string environments = 5;
+  optional string working_directory = 6;
+}
+
+message Application {
+  Metadata metadata = 1;
+  ApplicationSpec spec = 2;
+  ApplicationStatus status = 3;
+}
+
+message ExecutorSpec {
+  int32 slots = 2;
+}
+
+enum ExecutorState {
+  ExecutorIdle = 0;
+  ExecutorBound = 1;
+  ExecutorRunning = 2;
+  ExecutorUnknown = 3;
+}
+
+message ExecutorStatus {
+  ExecutorState state = 1;
+}
+
+message Executor {
+  Metadata metadata = 1;
+  ExecutorSpec spec = 2;
+  ExecutorStatus status = 3;
+}
+
+message SessionList {
+  repeated Session sessions = 1;
+}
+
+message ApplicationList {
+  repeated Application applications = 1;
+}
+
+message Result {
+  int32 return_code = 1;
+  optional string message = 2;
+}
+
+message EmptyRequest {
+}

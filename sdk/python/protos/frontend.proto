@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+import "types.proto";
+
+package flame;
+
+/*
+  The frontend service of Flame, which is used to communicate with client sdk,
+  e.g. create connection/session/task and so on.
+ */
+service Frontend {
+  rpc RegisterApplication(RegisterApplicationRequest) returns (Result) {}
+  rpc UnregisterApplication(UnregisterApplicationRequest) returns (Result) {}
+  rpc UpdateApplication(UpdateApplicationRequest) returns (Result) {}
+
+  rpc GetApplication(GetApplicationRequest) returns (Application) {}
+  rpc ListApplication(ListApplicationRequest) returns (ApplicationList) {}
+
+  rpc CreateSession (CreateSessionRequest) returns (Session) {}
+  rpc DeleteSession (DeleteSessionRequest) returns (Session) {}
+
+  rpc OpenSession (OpenSessionRequest) returns (Session) {}
+  rpc CloseSession (CloseSessionRequest) returns (Session) {}
+
+  rpc GetSession(GetSessionRequest) returns (Session) {}
+  rpc ListSession (ListSessionRequest) returns (SessionList) {}
+
+  rpc CreateTask (CreateTaskRequest) returns (Task) {}
+  rpc DeleteTask (DeleteTaskRequest) returns (Task) {}
+
+  rpc GetTask (GetTaskRequest) returns (Task) {}
+  rpc WatchTask (WatchTaskRequest) returns (stream Task) {}
+}
+
+message RegisterApplicationRequest {
+  string name = 1;
+  ApplicationSpec application = 2;
+}
+
+message UnregisterApplicationRequest {
+  string name = 1;
+}
+
+message UpdateApplicationRequest {
+  string name = 1;
+  ApplicationSpec application = 2;
+}
+
+message GetApplicationRequest {
+  string name = 1;
+}
+
+message ListApplicationRequest {
+
+}
+
+message CreateSessionRequest {
+  SessionSpec session = 1;
+}
+
+message DeleteSessionRequest {
+  string session_id = 1;
+}
+
+message OpenSessionRequest {
+  string session_id = 1;
+}
+
+message CloseSessionRequest {
+  string session_id = 1;
+}
+message GetSessionRequest {
+  string session_id = 1;
+}
+
+message ListSessionRequest {
+
+}
+
+message CreateTaskRequest {
+  TaskSpec task = 1;
+}
+
+message DeleteTaskRequest {
+  string task_id = 1;
+  string session_id = 2;
+}
+
+message GetTaskRequest {
+  string task_id = 1;
+  string session_id = 2;
+}
+
+message WatchTaskRequest {
+  string task_id = 1;
+  string session_id = 2;
+}
