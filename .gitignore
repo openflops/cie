@@ -21,3 +21,5 @@ ci/logs/
 ci/supervisord.log
 supervisord.pid
 flame.db*
+__pycache__
+*.egg-info/

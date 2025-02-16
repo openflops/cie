@@ -1,0 +1,15 @@
+[project]
+name = "flame-py"
+version = "0.1.0"
+
+maintainers = [
+  {name = "Klaus Ma", email = "klaus1982.cn@gmail.com"}
+]
+
+dependencies = [
+  "grpcio==1.70",
+  "protobuf==5.29",
+]
+
+[tool.setuptools]
+packages = ["flame"]
